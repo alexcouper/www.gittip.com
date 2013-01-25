@@ -1,7 +1,7 @@
 import json
 from nose.tools import assert_equal
 
-from gittip.testing import BaseTestCase
+from gittip.testing import BaseTestCase, test_website
 from gittip.testing.client import TestClient
 
 
@@ -9,7 +9,7 @@ class TipJsonTestCase(BaseTestCase):
 
     def test_get_amount_and_total_back_from_api(self):
         "Test that we get correct amounts and totals back on POSTs to tip.json"
-        client = TestClient()
+        client = TestClient(test_website)
 
         # First, create some test data
         # We need accounts
@@ -24,11 +24,11 @@ class TipJsonTestCase(BaseTestCase):
         # Then, add a $1.50 and $3.00 tip
         response1 = client.post("/test_tippee1/tip.json",
                                 {'amount': "1.00", 'csrf_token': csrf_token},
-                                user='test_tipper')
+                                cookie_info={'user': 'test_tipper'})
 
         response2 = client.post("/test_tippee2/tip.json",
                                 {'amount': "3.00", 'csrf_token': csrf_token},
-                                user='test_tipper')
+                                cookie_info={'user': 'test_tipper'})
 
         # Confirm we get back the right amounts.
         first_data = json.loads(response1.body)

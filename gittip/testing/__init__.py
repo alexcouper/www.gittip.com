@@ -448,6 +448,8 @@ def tip_graph(*a, **kw):
 test_website = Website([ '--www_root', str(join(TOP, 'www'))
                        , '--project_root', str(TOP)
                         ])
+filepath = join(TOP, 'configure-aspen.py')
+execfile(filepath, {'website': test_website})
 
 def serve_request(path, user=None):
     """Given an URL path, return response.
