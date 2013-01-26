@@ -11,6 +11,9 @@ from gittip.testing import test_website
 
 class TestClient(AspenTestClient):
 
+    def __init__(self):
+        super(TestClient, self).__init__(test_website)
+
     def add_cookie_info(self, request, cookie_info):
         if cookie_info:
             user = cookie_info.get('user')
